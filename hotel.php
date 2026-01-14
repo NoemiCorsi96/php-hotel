@@ -49,12 +49,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>php-hotel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-   <div class="container">
+   <div class="container py-4">
     <!--Stampo a schermo gli hotel in una tabella-->
-   <h1>Hotels</h1> 
-   <table class="table">
+   <h1 class="mb-4">Hotels</h1> 
+   <table class="table table-striped table-bordered align-middle">
     <thead>
         <tr>
             <th>Nome</th>

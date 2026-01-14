@@ -4,7 +4,7 @@ Stampare una tabella con tutti gli hotel e i relativi dati disponibili. ok
 
 Iniziate in modo graduale.
 Prima stampate in pagina i dati, senza preoccuparvi dello stile. ok
-Dopo aggiungete Bootstrap e mostrate le informazioni con una tabella.
+Dopo aggiungete Bootstrap e mostrate le informazioni con una tabella.ok
 
 Bonus:
 Aggiungere un form ad inizio pagina che tramite una richiesta GET permetta di filtrare gli hotel che hanno un parcheggio.
