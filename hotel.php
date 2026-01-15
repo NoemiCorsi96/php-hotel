@@ -42,6 +42,10 @@
     ];
     //var_dump($hotels);
 
+//Leggo i filtri dalla query string (GET)
+$filterParking = isset($_GET['parking']) && $_GET['parking'] === 'on';
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,6 +59,13 @@
    <div class="container py-4">
     <!--Stampo a schermo gli hotel in una tabella-->
    <h1 class="mb-4">Hotels</h1> 
+   <br>
+   <h3>Filtri</h3>
+   <form action="">
+    <input  id="parking" name="parking" type="checkbox">
+    <label for="parking">Presenza parcheggio</label>
+    <button type="submit">Filtra</button>
+   </form>
    <table class="table table-striped table-bordered align-middle">
     <thead>
         <tr>
@@ -73,6 +84,10 @@
         della graffa in modo che ad ogni riga venga associato l'elemento dell'array in modo dinamico. 
         Per stampare il valore utilizzo all'interno di php echo e l'elemento dell'array ciclato ovvero $hotel */
         foreach($hotels as $hotel){
+            //applico il filtro per il parcheggio e far vedere solo l'hote con i parcheggi
+            if($filterParking && !$hotel['parking']){
+                continue; //salta l'hotel se il filtro è attivo e l'hotel non ha parcheggio
+            }
         ?>
         <tr>
             <td><?php echo $hotel['name']; ?></td>
