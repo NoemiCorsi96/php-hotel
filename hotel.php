@@ -44,6 +44,36 @@
 
 //Leggo i filtri dalla query string (GET)
 $filterParking = isset($_GET['parking']) && $_GET['parking'] === 'on';
+// voto minimo: se non esiste o è vuoto, lo consideriamo null
+$minVote = null;
+if (isset($_GET['min_vote']) && $_GET['min_vote'] !== '') {
+  // converto in intero
+  $minVote = (int) $_GET['min_vote'];
+}
+
+//Filtro gli hotel
+$filteredHotels = [];
+foreach ($hotels as $hotel) {
+  $isOk = true;
+
+  // filtro parcheggio
+  if ($filterParking) {
+    if ($hotel['parking'] === false) {
+      $isOk = false;
+    }
+  }
+
+  // filtro voto minimo
+  if ($minVote !== null) {
+    if ($hotel['vote'] < $minVote) {
+      $isOk = false;
+    }
+  }
+
+  if ($isOk) {
+    $filteredHotels[] = $hotel;
+  }
+}
 
 
 ?>
@@ -61,9 +91,15 @@ $filterParking = isset($_GET['parking']) && $_GET['parking'] === 'on';
    <h1 class="mb-4">Hotels</h1> 
    <br>
    <h3>Filtri</h3>
-   <form action="">
-    <input  id="parking" name="parking" type="checkbox">
-    <label for="parking">Presenza parcheggio</label>
+   <form action="" class="mb-4 d-flex">
+    <div class="form-control">
+        <input  id="parking" name="parking" type="checkbox">
+        <label for="parking">Presenza parcheggio</label>
+    </div>
+    <div class="form-control">
+        <label for="min_vote">Voto minimo:</label>
+        <input type="number" id="min_vote" name="min_vote" min="1" max="5">
+    </div>
     <button type="submit">Filtra</button>
    </form>
    <table class="table table-striped table-bordered align-middle">
@@ -86,7 +122,10 @@ $filterParking = isset($_GET['parking']) && $_GET['parking'] === 'on';
         foreach($hotels as $hotel){
             //applico il filtro per il parcheggio e far vedere solo l'hote con i parcheggi
             if($filterParking && !$hotel['parking']){
-                continue; //salta l'hotel se il filtro è attivo e l'hotel non ha parcheggio
+                continue; //salta l'hotel se il filtro è attivo e l'hotel non ha parcheggio serve per non fare il loop su quell'hotel
+            }
+            if ($minVote !== null && $hotel['vote'] < $minVote) {
+                continue; // salta l'hotel se il voto è inferiore al voto minimo
             }
         ?>
         <tr>
